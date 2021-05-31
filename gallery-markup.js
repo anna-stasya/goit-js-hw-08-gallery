@@ -81,7 +81,7 @@ function onOpenModal(event) {
 closeModalImage.addEventListener('click', onCloseModal);
 
 function onCloseModal() {
-    window.removeEventListener('keydown', onEscClick) //для закрытия по ESС 
+    window.removeEventListener('keydown', onEscClick); //для закрытия по ESС
     openModalImage.classList.remove('is-open');
      
     lightboxImage.src = '';
@@ -95,7 +95,7 @@ const backdropClick = document.querySelector('.lightbox__overlay');
 backdropClick.addEventListener('click', onBackdropClick);
 
 function onBackdropClick() {
-    onCloseModal()
+    onCloseModal();
 
     console.log('кликнули по backdrop');
 }
@@ -103,9 +103,10 @@ function onBackdropClick() {
 // ===========================закрыть по ESС==========================
 
 function onEscClick(event) {
+    const ESC_KEY_CODE = 'Escape';
     console.log(event.code);
 
-    if (event.code === 'Escape') {
-      onCloseModal()  
+    if (event.code === ESC_KEY_CODE) {
+        onCloseModal();
     }
 }
