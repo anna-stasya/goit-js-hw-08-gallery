@@ -1,7 +1,7 @@
 import defaultExport from './gallery-items.js';
 
 const galleryContainer = document.querySelector('.js-gallery');
-const galleryMarkup = createGalleryMarkup (defaultExport);
+const galleryMarkup = createGalleryMarkup(defaultExport);
 
 galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
 
@@ -11,7 +11,7 @@ function createGalleryMarkup (images) {
             <li class="gallery__item">
                 <a
                     class="gallery__link"
-                    href= "#"
+                    href= "${original}"
                 >
                     <img
                     class="gallery__image"
@@ -26,37 +26,58 @@ function createGalleryMarkup (images) {
 }
 
 //================================открыть модалку ========================================
- // href="${original}"
-//клик по картинке
-// galleryContainer.addEventListener('click', onGalleryContainerClick);
-
-// function onGalleryContainerClick(event) {
-//     const isGallerySwatch = event.target.classList.contains('gallery__item');
-    
-//     if(!isGallerySwatch){
-//         return;
-//     }
-//     //console.log(event.target)
-// }
-
-//================================открыть модалку ========================================
 
 const openModalImage = document.querySelector('.js-lightbox');
 const lightboxImage = openModalImage.querySelector('.lightbox__image');
 const closeModalImage = document.querySelector('[data-action="close-lightbox"]'); 
-//const closeModalBtn = document.querySelector('.lightbox__button');
 
-//класс is-open на модальное окно
+
 galleryContainer.addEventListener('click', onOpenModal);
 
 function onOpenModal(event) {
-    openModalImage.classList.add('is-open');
+    event.preventDefault();
 
-    lightboxImage.src = event.target.dataset.source;
-    lightboxImage.alt = event.target.alt;
+    const isGallerySwatch = event.target.classList.contains('gallery__image');
+    
+    if(!isGallerySwatch){
+        return;
+    }
+
+    if (event) {
+        openModalImage.classList.add('is-open');
+
+        lightboxImage.src = event.target.dataset.source; 
+        lightboxImage.alt = event.target.alt;
+    }
+
 }
 
-//================================звакрыть модалку ========================================
+
+//================================пролистывание изображений ========================================
+//! в процессе. Что-то не то. Понять бы что))
+
+// const arrayImages = [];
+
+// document.addEventListener('keydown', (event) => {
+//     let newIndex;
+//     const swipeGalleryImage = arrayImages.indexOf(lightboxImage.src);
+//     if (event.key === 'ArrowLeft') {
+        
+//             newIndex = swipeGalleryImage - 1;
+//             if (newIndex === -1) {
+//                 newIndex = arrayImages.length - 1;
+//             }    
+        
+//     } else if (event.key === 'ArrowRight') {
+//         newIndex = swipeGalleryImage + 1;
+//         if (newIndex === (arrayImages.length)) {
+//                 newIndex = 0;
+//             }
+//     }
+//     lightboxImage.src = arrayImages[newIndex];
+// })
+
+//================================закрыть модалку через иконку ========================================
 
 closeModalImage.addEventListener('click', onCloseModal);
 
@@ -67,20 +88,15 @@ function onCloseModal() {
     lightboxImage.alt = '';
 }
 
-//================================пролистывание изображений ========================================
+// ===============закрыть по ESС
+const backdropClick = document.querySelector('.lightbox__overlay');
 
+backdropClick.addEventListener('click', onBackdropClick);
 
-const arrayImages = [];
+function onBackdropClick() {
+    openModalImage.classList.remove('is-open');
 
-document.addEventListener('keydown', event => {
-    let newIndex;
-    const swipeGalleryImage = arrayImages.indexOf(lightboxImage.src);
-    if (event.key === 'ArrowLeft') {
-        if (swipeGalleryImage > -1) {
-            newIndex = swipeGalleryImage - 1;
-            if (newIndex === -1) {
-                newIndex = arrayImages.length - 1;
-            }    
-        }
-    }
-})
+    lightboxImage.src = '';
+    lightboxImage.alt = '';
+   
+}
