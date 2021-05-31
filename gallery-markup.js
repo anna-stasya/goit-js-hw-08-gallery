@@ -50,9 +50,7 @@ function onOpenModal(event) {
         lightboxImage.src = event.target.dataset.source; 
         lightboxImage.alt = event.target.alt;
     }
-
 }
-
 
 //================================пролистывание изображений ========================================
 //! в процессе. Что-то не то. Понять бы что))
@@ -78,7 +76,7 @@ function onOpenModal(event) {
 //     lightboxImage.src = arrayImages[newIndex];
 // })
 
-//================================закрыть модалку через иконку ========================================
+//========================закрыть модалку через иконку ========================================
 
 closeModalImage.addEventListener('click', onCloseModal);
 
@@ -90,7 +88,8 @@ function onCloseModal() {
     lightboxImage.alt = '';
 }
 
-// ===============закрыть по backdrop
+// ==============================закрыть по backdrop====================
+
 const backdropClick = document.querySelector('.lightbox__overlay');
 
 backdropClick.addEventListener('click', onBackdropClick);
@@ -101,9 +100,7 @@ function onBackdropClick() {
     console.log('кликнули по backdrop');
 }
 
-// ===============закрыть по ESС
-
-//window.addEventListener('keydown', onEscClick);
+// ===========================закрыть по ESС==========================
 
 function onEscClick(event) {
     console.log(event.code);
