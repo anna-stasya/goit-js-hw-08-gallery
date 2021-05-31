@@ -35,6 +35,7 @@ const closeModalImage = document.querySelector('[data-action="close-lightbox"]')
 galleryContainer.addEventListener('click', onOpenModal);
 
 function onOpenModal(event) {
+    window.addEventListener('keydown', onEscClick); //для закрытия по ESС 
     event.preventDefault();
 
     const isGallerySwatch = event.target.classList.contains('gallery__image');
@@ -82,21 +83,32 @@ function onOpenModal(event) {
 closeModalImage.addEventListener('click', onCloseModal);
 
 function onCloseModal() {
+    window.removeEventListener('keydown', onEscClick) //для закрытия по ESС 
     openModalImage.classList.remove('is-open');
      
     lightboxImage.src = '';
     lightboxImage.alt = '';
 }
 
-// ===============закрыть по ESС
+// ===============закрыть по backdrop
 const backdropClick = document.querySelector('.lightbox__overlay');
 
 backdropClick.addEventListener('click', onBackdropClick);
 
 function onBackdropClick() {
-    openModalImage.classList.remove('is-open');
+    onCloseModal()
 
-    lightboxImage.src = '';
-    lightboxImage.alt = '';
-   
+    console.log('кликнули по backdrop');
+}
+
+// ===============закрыть по ESС
+
+//window.addEventListener('keydown', onEscClick);
+
+function onEscClick(event) {
+    console.log(event.code);
+
+    if (event.code === 'Escape') {
+      onCloseModal()  
+    }
 }
